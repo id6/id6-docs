@@ -25,11 +25,8 @@ module.exports = {
         //   position: 'left',
         // },
         // {to: 'blog', label: 'Blog', position: 'left'},
-        {
-          href: 'https://github.com/id6/id6',
-          label: 'GitHub',
-          position: 'right',
-        },
+        { href: 'https://twitter.com/id6io', label: 'Twitter', position: 'right', },
+        { href: 'https://github.com/id6/id6', label: 'GitHub', position: 'right', },
       ],
     },
     footer: {
