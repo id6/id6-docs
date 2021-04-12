@@ -7,11 +7,12 @@ module.exports = {
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'id6', // Usually your GitHub org/user name.
-  projectName: 'id6', // Usually your repo name.
+  organizationName: 'id6',
+  projectName: 'id6',
   themeConfig: {
+    image: 'static/img/social-cover.png',
     navbar: {
-      title: 'id6',
+      title: '',
       logo: {
         alt: 'id6 logo',
         src: 'img/logo.svg',
@@ -78,17 +79,20 @@ module.exports = {
       '@docusaurus/preset-classic',
       {
         docs: {
+          routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/id6/id6/edit/latest/',
+          editUrl: 'https://github.com/id6/id6-docs/edit/latest/',
         },
-        // blog: {
-        //   showReadingTime: true,
-        //   editUrl: 'https://github.com/facebook/docusaurus/edit/master/website/blog/',
-        // },
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
+          customCss: require.resolve('./src/css/custom.scss'),
         },
       },
     ],
+  ],
+  plugins: [
+    'docusaurus-plugin-sass',
+    ['@easyops-cn/docusaurus-search-local', {
+      hashed: true,
+    }],
   ],
 };
