@@ -18,19 +18,12 @@ module.exports = {
         src: 'img/logo.svg',
       },
       items: [
-        // {
-        //   to: '/',
-        //   activeBasePath: 'docs',
-        //   label: 'Docs',
-        //   position: 'left',
-        // },
-        // {to: 'blog', label: 'Blog', position: 'left'},
-        { href: 'https://twitter.com/id6io', label: 'Twitter', position: 'right', },
-        { href: 'https://github.com/id6/id6', label: 'GitHub', position: 'right', },
+        { href: 'https://twitter.com/id6io', label: 'Twitter', position: 'right' },
+        { href: 'https://github.com/id6/id6', label: 'GitHub', position: 'right' },
       ],
     },
     footer: {
-      style: 'dark',
+      style: 'light',
       links: [
         {
           title: 'Docs',
@@ -59,7 +52,7 @@ module.exports = {
           items: [
             {
               label: 'Blog',
-              to: 'https://id6.io/blog',
+              to: 'https://blog.id6.io',
             },
             {
               label: 'GitHub',

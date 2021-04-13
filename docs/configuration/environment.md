@@ -15,6 +15,66 @@ sidebar_label: 'Environment'
 
 Enable debug logs. We use the [debug](https://www.npmjs.com/package/debug) Npm package with scope `id6*`. To enable logs, use `DEBUG=id6*`.
 
+## ID6\_AUTH\_ADAPTER
+
+**Default**: undefined
+
+**Required**: no
+
+**Type**: string
+
+**Description**:
+
+Undocumented.
+
+## ID6\_LOCAL\_AUTH\_ENABLED
+
+**Default**: true
+
+**Required**: no
+
+**Type**: boolean
+
+**Description**:
+
+Whether email/password auth should be enabled
+
+## ID6\_NAME
+
+**Default**: app
+
+**Required**: no
+
+**Type**: string
+
+**Description**:
+
+Name of your app
+
+## ID6\_LOGO
+
+**Default**: undefined
+
+**Required**: no
+
+**Type**: string
+
+**Description**:
+
+URL of your app logo
+
+## ID6\_TERMS\_URL
+
+**Default**: undefined
+
+**Required**: no
+
+**Type**: string
+
+**Description**:
+
+URL of your app terms of service
+
 ## ID6\_PORT
 
 **Default**: 3001
@@ -37,79 +97,31 @@ The port on which id6 is listening.
 
 **Description**:
 
-Public URL where id6 is served.
+URL of your id6 instance
 
-## ID6\_URL\_INTERNAL
-
-**Default**: `id6_URL`
-
-**Required**: no
-
-**Type**: string
-
-**Description**:
-
-Setting this variable only makes sense when Caddy is deployed as a standalone container. It sets the URL where the id6 API can be accessed internally. In local development, you would set this to `http://host.docker.internal:3001`. In a production `docker-compose.yml`, you would set it to something like `http://api` if your API container is named `api`.
-
-## ID6\_UI\_URL
-
-**Default**: `id6_URL`
-
-**Required**: no
-
-**Type**: string
-
-**Description**:
-
-Public URL where the UI is served. Setting this variable makes sense when you are deploying the UI elsewhere than on `id6_URL`.
-
-## ID6\_UI\_URL\_INTERNAL
-
-**Default**: `id6_URL`
-
-**Required**: no
-
-**Type**: string
-
-**Description**:
-
-Setting this variable only makes sense when Caddy is deployed as a standalone container. It sets the URL where the id6 UI can be accessed internally. In local development, you would set this to `http://host.docker.internal:3000`. In a production `docker-compose.yml`, you would set it to something like `http://ui` if your UI container is named `ui`.
-
-## ID6\_SITES\_URL
-
-**Default**: `id6_URL`
-
-**Required**: no
-
-**Type**: string
-
-**Description**:
-
-This is where your sites are served. Setting this variables allows you to serve your sites with a different domain than that used to access id6.
-
-## ID6\_STANDALONE
-
-**Default**: false
-
-**Required**: no
-
-**Type**: boolean
-
-**Description**:
-
-When enabled, id6 will not configure the UI and API in Caddy. This variables only makes sense when you are deploying all containers separately.
-
-## ID6\_UI\_DIR
+## ID6\_REDIRECT\_URL
 
 **Default**: undefined
 
-**Required**: no
+**Required**: yes
 
 **Type**: string
 
 **Description**:
 
-When set, the UI will be served from this path. Otherwise, it is reverse-proxied to `id6_UI_URL_INTERNAL`.
+URL to which your users should be redirected after login
+
+## ID6\_AUTHORIZATION\_PORT
+
+**Default**: 3030
+
+**Required**: no
+
+**Type**: number
+
+**Description**:
+
+Port on which the authorization server is listening. This can be useful when your
 
 ## ID6\_JWT\_SECRET
 
@@ -125,7 +137,7 @@ Secret used to sign and verify JWT tokens. Can be generated with `openssl rand -
 
 ## ID6\_JWT\_TOKEN\_EXPIRATION
 
-**Default**: 2592000000 (30 days)
+**Default**: 2592000000
 
 **Required**: yes
 
@@ -134,6 +146,18 @@ Secret used to sign and verify JWT tokens. Can be generated with `openssl rand -
 **Description**:
 
 Expiration time (in ms) for JWT tokens.
+
+## ID6\_TOKEN\_EXPIRATION
+
+**Default**: 2592000000
+
+**Required**: yes
+
+**Type**: number
+
+**Description**:
+
+Expiration time (in ms) for regular tokens (password reset...).
 
 ## ID6\_GITLAB\_URL
 
@@ -171,6 +195,18 @@ Your Gitlab app Client ID.
 
 Your Gitlab app Client Secret.
 
+## ID6\_GITLAB\_GROUPS
+
+**Default**: undefined
+
+**Required**: yes
+
+**Type**: any
+
+**Description**:
+
+Comma-separated list of Gitlab groups. Allows you to restrict login to only members of the given groups.
+
 ## ID6\_GITEA\_URL
 
 **Default**: https://gitea.com
@@ -182,18 +218,6 @@ Your Gitlab app Client Secret.
 **Description**:
 
 Your Gitea URL.
-
-## ID6\_GITLAB\_GROUPS
-
-**Default**: undefined
-
-**Required**: no
-
-**Type**: array
-
-**Description**:
-
-Comma-separated list of Gitlab groups. Allows you to restrict login to only members of the given groups.
 
 ## ID6\_GITEA\_CLIENT\_ID
 
@@ -223,9 +247,9 @@ Your Gitea app Client Secret.
 
 **Default**: undefined
 
-**Required**: no
+**Required**: yes
 
-**Type**: array
+**Type**: any
 
 **Description**:
 
@@ -271,9 +295,9 @@ Your Github app Client Secret.
 
 **Default**: undefined
 
-**Required**: no
+**Required**: yes
 
-**Type**: array
+**Type**: any
 
 **Description**:
 
@@ -302,30 +326,6 @@ Your Google app Client ID.
 **Description**:
 
 Your Google app Client Secret.
-
-## ID6\_MONGO\_URI
-
-**Default**: undefined
-
-**Required**: yes
-
-**Type**: string
-
-**Description**:
-
-URI of Mongo instance where id6 should store its data.
-
-## ID6\_MIGRATE\_ROLLBACK
-
-**Default**: false
-
-**Required**: yes
-
-**Type**: boolean
-
-**Description**:
-
-Forces the server to rollback the last migration, then exit. Use this when you're trying to [downgrade](/get-started/upgrade-and-downgrade).
 
 ## ID6\_COOKIE\_SAMESITE
 
@@ -361,7 +361,7 @@ Allows you to set the [Secure](https://developer.mozilla.org/en-US/docs/Web/HTTP
 
 **Description**:
 
-Window size for rate limiting, in ms.
+Applies to the authentication server only. Window size for rate limiting, in ms.
 
 ## ID6\_RATE\_LIMIT\_MAX\_PER\_WINDOW
 
@@ -373,7 +373,43 @@ Window size for rate limiting, in ms.
 
 **Description**:
 
-Max number of requests allows in the rate limiting window.
+Applies to the authentication server only. Max number of requests allows in the rate limiting window.
+
+## ID6\_AUTHORIZATION\_RATE\_LIMIT\_WINDOW
+
+**Default**: 60000
+
+**Required**: yes
+
+**Type**: number
+
+**Description**:
+
+Applies to the authorization server only. Window size for rate limiting, in ms.
+
+## ID6\_AUTHORIZATION\_RATE\_LIMIT\_MAX\_PER\_WINDOW
+
+**Default**: 100
+
+**Required**: yes
+
+**Type**: number
+
+**Description**:
+
+Applies to the authorization server only. Max number of requests allows in the rate limiting window.
+
+## ID6\_PROMETHEUS\_ENABLED
+
+**Default**: false
+
+**Required**: no
+
+**Type**: boolean
+
+**Description**:
+
+Whether to start the prometheus server.
 
 ## ID6\_PROMETHEUS\_HOST
 
@@ -385,11 +421,11 @@ Max number of requests allows in the rate limiting window.
 
 **Description**:
 
-Host where the Prometheus server should listen.
+Prometheus host.
 
 ## ID6\_PROMETHEUS\_PORT
 
-**Default**: 3002
+**Default**: 9090
 
 **Required**: yes
 
@@ -397,7 +433,7 @@ Host where the Prometheus server should listen.
 
 **Description**:
 
-Port where the Prometheus server should listen.
+Prometheus port.
 
 ## ID6\_PROMETHEUS\_REFRESH\_RATE
 
@@ -409,11 +445,11 @@ Port where the Prometheus server should listen.
 
 **Description**:
 
-How often to refresh Prometheus metrics.
+How often prometheus metrics shouls be refreshed.
 
 ## ID6\_PROMETHEUS\_METRICS\_PREFIX
 
-**Default**: id6_server_
+**Default**: id6_
 
 **Required**: yes
 
@@ -421,31 +457,7 @@ How often to refresh Prometheus metrics.
 
 **Description**:
 
-Prefix used for Prometheus metrics.
-
-## ID6\_REDIS\_URL
-
-**Default**: undefined
-
-**Required**: no
-
-**Type**: string
-
-**Description**:
-
-Redis URL for proxying websockets connections. This allows you to run multiple instance of the id6 API in parallel.
-
-## ID6\_HOOK\_TIMEOUT
-
-**Default**: 5000
-
-**Required**: yes
-
-**Type**: number
-
-**Description**:
-
-How much time hook requets should wait before failing.
+Prometheus metric prefix.
 
 ## ID6\_MAIL\_HOST
 
@@ -517,11 +529,11 @@ Mail form. Some mail providers (like OVH) force this email to equal the mail use
 
 **Description**:
 
-Mail subject prefix.
+Prefix of email subjects.
 
 ## ID6\_MAIL\_TEMPLATE\_DIR
 
-**Default**: ./emails/templates
+**Default**: /Users/geoffroy/dev/git/id6/id6/server/src/env/emails/templates
 
 **Required**: no
 
@@ -531,79 +543,21 @@ Mail subject prefix.
 
 Directory where mail templates can be found.
 
-## ID6\_SENTRY\_ENABLED
+## ID6\_USERS
 
-**Default**: true
+**Default**: undefined
 
 **Required**: yes
 
-**Type**: boolean
+**Type**: any
 
 **Description**:
 
-Whether to enabled [Sentry](https://sentry.io/).
+Comma-separated list of user/password for in-memory authentication. Example: "user:password,user2:password2".
 
-## ID6\_RESTRICTED\_IPS
+## ID6\_AUTHORIZATION\_SECRET
 
-**Default**: none
-
-**Required**: no
-
-**Type**: array
-
-**Description**:
-
-Hook URLs are resolved and checked against these restriected IPs.
-
-<div class="blockquote" data-props='{ "mod": "info" }'>
-
-Partially implemented, not yet working.
-
-</div>
-
-## ID6\_RESTRICTED\_DOMAINS
-
-**Default**: none
-
-**Required**: no
-
-**Type**: array
-
-**Description**:
-
-<div class="blockquote" data-props='{ "mod": "info" }'>
-
-Partially implemented, not yet working.
-
-</div>
-
-## ID6\_CADDY\_DIR
-
-**Default**: /sites
-
-**Required**: no
-
-**Type**: string
-
-**Description**:
-
-Directory where Caddy looks for sites.
-
-## ID6\_SITES\_DIR
-
-**Default**: /sites
-
-**Required**: no
-
-**Type**: string
-
-**Description**:
-
-Directory where id6 stores sites.
-
-## ID6\_CADDY\_ADMIN\_API\_URL
-
-**Default**: http://localhost:2019
+**Default**: undefined
 
 **Required**: yes
 
@@ -611,57 +565,9 @@ Directory where id6 stores sites.
 
 **Description**:
 
-Admin API of Caddy. If Caddy runs in a standalone container, make sure to expose the admin API as it listens to `localhost` by default.
+Secret for making requests to the authorization API.
 
-## ID6\_TMP\_DIRECTORY
-
-**Default**: /var/folders/ff/v59bv_992tz5yq0sg7gptp300000gn/T
-
-**Required**: no
-
-**Type**: string
-
-**Description**:
-
-Where uploaded files are stored before being processed.
-
-## ID6\_STATIC\_DIR
-
-**Default**: ./public
-
-**Required**: no
-
-**Type**: string
-
-**Description**:
-
-Where the id6 API serves static content. This is used to server generic pages such as a 404.html page.
-
-## ID6\_INVITE\_EXPIRATION\_TIME
-
-**Default**: 86400000
-
-**Required**: no
-
-**Type**: number
-
-**Description**:
-
-Amount of time (in ms) before an invitation expires.
-
-## ID6\_AXIOS\_TIMEOUT
-
-**Default**: 10000
-
-**Required**: no
-
-**Type**: number
-
-**Description**:
-
-Timeout for HTTP calls made with Axios.
-
-## ID6\_USER
+## ID6\_POSTGRES\_URL
 
 **Default**: undefined
 
@@ -671,67 +577,11 @@ Timeout for HTTP calls made with Axios.
 
 **Description**:
 
-Username for in-memory authentication.
+Postgres URL if you are using a postgres database.
 
-## ID6\_PASSWORD
+## ID6\_DATA\_DIR
 
-**Default**: undefined
-
-**Required**: no
-
-**Type**: string
-
-**Description**:
-
-Password for in-memory authentication.
-
-## ID6\_MAX\_ORGS
-
-**Default**: 1
-
-**Required**: no
-
-**Type**: number
-
-**Description**:
-
-Maximum number of organizations that can be created on this id6 instance. Setting this value to `0` will disable the limit.
-
-## ID6\_MULTER\_LIMITS
-
-**Default**: {}
-
-**Required**: no
-
-**Type**: JSON object
-
-**Description**:
-
-A stringified JSON object with [Multer limits](https://github.com/expressjs/multer#limits). For example:
-
-<div class="code-group">
-
-```dotenv
-id6_MULTER_LIMITS={"fileSize":150000000}
-```
-
-</div>
-
-## ID6\_HTTPS\_AUTO
-
-**Default**: true
-
-**Required**: no
-
-**Type**: boolean
-
-**Description**:
-
-Controls whether id6 should handle SSL on its own. Disable this when deploying id6 behind a reverse proxy.
-
-## ID6\_GOOGLE\_RECAPTCHA\_SITE\_KEY
-
-**Default**: undefined
+**Default**: /data
 
 **Required**: no
 
@@ -739,23 +589,11 @@ Controls whether id6 should handle SSL on its own. Disable this when deploying i
 
 **Description**:
 
-Google Recaptcha V3 site key. This key can be obtained after creating a new app [here](https://www.google.com/recaptcha/admin/create).
-
-## ID6\_GOOGLE\_RECAPTCHA\_SECRET\_KEY
-
-**Default**: undefined
-
-**Required**: no
-
-**Type**: string
-
-**Description**:
-
-Google Recaptcha V3 secret key. This key can be obtained after creating a new app [here](https://www.google.com/recaptcha/admin/create).
+Path of the directory where we store data.
 
 ## ID6\_POSTHOG\_ENABLED
 
-**Default**: true
+**Default**: false
 
 **Required**: no
 

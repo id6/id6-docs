@@ -3,18 +3,26 @@ module.exports = {
     {
       type: 'category',
       label: 'Getting started',
-      collapsed: false,
       items: [
         'get-started/how-it-works',
         'get-started/quick-start',
         'get-started/installation',
         'get-started/upgrade-and-downgrade',
+        'get-started/faq',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Configuration',
+      items: [
+        'configuration/emails',
+        'configuration/environment',
+        'configuration/database',
       ],
     },
     {
       type: 'category',
       label: 'Authentication',
-      collapsed: false,
       items: [
         'authentication/local',
         'authentication/in-memory',
@@ -26,12 +34,11 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Configuration',
-      collapsed: false,
+      label: 'API',
       items: [
-        'configuration/emails',
-        'configuration/environment',
+        'api/authentication',
+        'api/authorization',
       ],
-    },
+    }
   ],
 };
