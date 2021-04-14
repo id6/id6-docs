@@ -13,7 +13,7 @@ Calls to these endpoints need to be authenticated using the HTTP `auth` cookie d
 
 **Path:** `/auth/signout`
 
-**Method:** POST
+**Method:** `POST`
 
 **Payload** none
 
@@ -21,15 +21,15 @@ Calls to these endpoints need to be authenticated using the HTTP `auth` cookie d
 
 ## Get user info
 
-**Path:** /user
+**Path:** `/user`
 
-**Method:** GET
+**Method:** `GET`
 
 **Response:**
 
 When the user is authenticated, example response:
 
-```
+```json
 {
   "id": 1,
   "authType": "local",
@@ -51,13 +51,13 @@ null
 
 **Requires authentication:** yes
 
-**Path:** /user/profile
+**Path:** `/user/profile`
 
-**Method:** POST
+**Method:** `POST`
 
 **Body:**
 
-```
+```json
 {
   "name": "Geoffroy Empain",
   "email": "test@test.com",
@@ -72,9 +72,9 @@ null
 
 **Requires authentication:** yes
 
-**Path:** /user/picture
+**Path:** `/user/picture`
 
-**Method:** POST
+**Method:** `POST`
 
 **Headers:**
 
@@ -88,9 +88,9 @@ Content-Type: multipart/form-data
 picture=<picture form data>
 ```
 
-**Response:** POST
+**Response:**
 
-```
+```json
 {
   "picture": "https://...."
 }
@@ -102,9 +102,9 @@ The profile picture is only exposed to its owner. If you want other users to be 
 
 **Requires authentication:** yes
 
-**Path:** /user/picture
+**Path:** `/user/picture`
 
-**Method:** GET
+**Method:** `GET`
 
 **Response:**
 
@@ -114,9 +114,9 @@ Octet stream with the profile picture of the authenticated user.
 
 **Requires authentication:** yes
 
-**Path:** /user/disconnect
+**Path:** `/user/disconnect`
 
-**Method:** GET
+**Method:** `GET`
 
 **Response:** 204
 
