@@ -5,7 +5,7 @@ sidebar_label: 'Database'
 
 ## SQLite
 
-SQLite is used by default. The database is located at `/data/id6.sqlite`. You can change the directory by setting the [`ID6_DATA_DIR`](/configuration/environment#id6_data_dir) environment variable.
+SQLite is used by default. The database is located at `/data/id6.sqlite`.
 
 ## Postgres
 
