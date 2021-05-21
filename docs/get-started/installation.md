@@ -65,6 +65,8 @@ services:
       ID6_MAIL_USERNAME: auth@company.com
       ID6_MAIL_FROM: auth@company.com
       ID6_MAIL_PASSWORD: ${ID6_MAIL_PASSWORD?ID6_MAIL_PASSWORD}
+    volumes:
+      - /data:/data
     labels:
       - "traefik.enable=true"
       # authentication endpoint
@@ -95,17 +97,14 @@ Create a file named `docker-compose.yml`:
 
  ```yaml
 version: "3"
-
 services:
-
   id6:
-    image: id6io/id6
-    restart: unless-stopped
+    image: id6
     ports:
       # authentication (login page + user api)
       - 3000:3000
       # authorization (verify tokens from your backends)
-      - 3030:3030 
+      - 3030:3030
     environment:
       ID6_URL: http://localhost:3000
       # where your users should be redirected after login
@@ -114,8 +113,19 @@ services:
       ID6_JWT_SECRET: changeMe
       # secret used to access the authorization API
       ID6_AUTHORIZATION_SECRET: changeMe
-      # in-memory authentication
-      ID6_USERS: "user:password,user2:password2"
+      # email config for local auth
+      ID6_MAIL_FROM: noreply@app.com
+      ID6_MAIL_HOST: mailhog
+      ID6_MAIL_PORT: 1025
+    volumes:
+      - ./tmp:/data
+
+  mailhog:
+    image: mailhog/mailhog
+    restart: unless-stopped
+    ports:
+      - 8025:8025
+      - 1025:1025
 ```
 
 Run `docker-compose up -d`.
