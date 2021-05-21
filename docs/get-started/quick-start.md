@@ -54,7 +54,7 @@ import { AuthProvider } from '@id6/react'
 function App() {
   return (
     <AuthProvider url="http://localhost:3000">
-      <Index/>
+      <Home/>
     </AuthProvider>
   );
 }
@@ -66,7 +66,7 @@ Create a home component:
 import React from 'react'
 import { useAuth } from '@id6/react'
 
-function Index() {
+function Home() {
   const { loading, error, user, signOut } = useAuth();
 
   const logout = () => {
