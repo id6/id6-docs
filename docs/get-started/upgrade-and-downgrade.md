@@ -2,7 +2,13 @@
 title: 'Upgrade and downgrade'
 ---
 
-Always backup your data before upgrading or downgrading. Here is a quick backup script:
+:::danger
+
+**Always backup** your data **before** upgrading **or** downgrading. **Seriously, do it.**
+
+:::
+
+Here is a convenient script for backing up your Docker volumes, assuming they are all mapped inside `/data`.
 
 ```bash
 #!/usr/bin/env bash
@@ -16,56 +22,49 @@ cd $backup_directory
 docker stop $containers
 
 sudo tar -zcf data.tar.gz /data
-#sudo tar -zcf docker.tar.gz /docker
 
 docker start $containers
 ```
 
 ## Upgrade
 
-### With Docker
+1. Backup your volumes.
+1. Run
 
-```shell script
-docker stop id6
-docker pull id6io/id6
-docker start id6
-```
-
-### With Docker Compsoe
-
-```bash
-docker-compose pull
-docker-compose up -d
-```
+    ```bash
+    docker-compose pull
+    docker-compose up -d
+    ```
 
 ## Downgrading
 
-Downgrading must be done **one version at a time** so that migrations are properly rolled back. For example, say you are using v1.1.0 and want to downgrade to v1.0.0. If there is v1.0.1 between v1.1.0 and v1.0.0. You will have to:
-- downgrade from 1.1.0 to 1.0.1
-- downgrade from 1.0.1 to 1.0.0
+Downgrading must be done **one version at a time** so that migrations are properly rolled back. For example, say you are using v1.1.0 and want to downgrade to v1.0.0. If there is v1.0.1 between v1.1.0 and v1.0.0, ou will have to downgrade from 1.1.0 to 1.0.1 then from 1.0.1 to 1.0.0.
 
-For example, downgrading from 1.1.0 to 1.0.0:
+Example downgrading from 1.1.0 to 1.0.1:
 
-```shell script
-# stop server
-docker stop id6
-# backup volumes
-cp -r /data/id6 /data/id6.bak
+1. Backup your volumes.
+1. Update your `docker-compose.yml`:
 
-# downgrade to 1.0.1
+    ```yaml
+    services:
+      id6:
+        image: id6io/id6:1.1.0
+        # ...
+        environment:
+          ID6_MIGRATE_ROLLBACK: "true"
+    ```
 
-# rollback migrations of 1.1.0
-docker run --cmd 'typorm migrate:rollback' id6io/id6:1.1.0
-# pull previous version (1.0.1)
-docker pull id6io/id6:1.0.1
+1. Run `docker-compose up -d`
+1. Downgrade the id6 version and **remove** the `ID6_MIGRATE_ROLLBACK` environment variables:
 
-# downgrade to 1.0.0
+    ```yaml
+    services:
+      id6:
+        image: id6io/id6:1.0.1
+        # ...
+        environment:
+          #ID6_MIGRATE_ROLLBACK: "true"
+    ```
 
-# rollback migrations of 1.0.1
-docker --cmd 'typorm migrate:rollback' run id6io/id6:1.0.1
-# pull previous version (1.0.0)
-docker pull id6io/id6:1.0.0
-
-# start normally
-docker run id6io/id6:1.0.0
-```
+1. Run `docker-compose pull`
+1. Run `docker-compose up -d`
