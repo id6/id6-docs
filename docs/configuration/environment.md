@@ -5,7 +5,7 @@ sidebar_label: 'Environment'
 
 ## DEBUG
 
-**Default**: undefined
+**Default**: none
 
 **Required**: no
 
@@ -13,31 +13,7 @@ sidebar_label: 'Environment'
 
 **Description**:
 
-Enable debug logs. We use the [debug](https://www.npmjs.com/package/debug) Npm package with scope `id6*`. To enable logs, use `DEBUG=id6*`.
-
-## ID6\_AUTH\_ADAPTER
-
-**Default**: undefined
-
-**Required**: no
-
-**Type**: string
-
-**Description**:
-
-Undocumented.
-
-## ID6\_LOCAL\_AUTH\_ENABLED
-
-**Default**: true
-
-**Required**: no
-
-**Type**: boolean
-
-**Description**:
-
-Whether email/password auth should be enabled
+Enable debug logs. We use the [debug](https://www.npmjs.com/package/debug) Npm package with scope `id6*`. To enable logs, use `DEBUG=id6*`. The scope for database logs is `id6.db`
 
 ## ID6\_NAME
 
@@ -73,7 +49,7 @@ URL of your app logo
 
 **Description**:
 
-URL of your app terms of service
+URL of your terms of service
 
 ## ID6\_PORT
 
@@ -509,7 +485,7 @@ Mail password.
 
 ## ID6\_MAIL\_FROM
 
-**Default**: undefined
+**Default**: noreply@localhost
 
 **Required**: no
 
@@ -579,19 +555,7 @@ Secret for making requests to the authorization API.
 
 Postgres URL if you are using a postgres database.
 
-## ID6\_DATA\_DIR
-
-**Default**: /data
-
-**Required**: no
-
-**Type**: string
-
-**Description**:
-
-Path of the directory where we store data.
-
-## ID6\_POSTHOG\_ENABLED
+## ID6\_MIGRATE\_ROLLBACK
 
 **Default**: false
 
@@ -601,4 +565,16 @@ Path of the directory where we store data.
 
 **Description**:
 
-Whether PostHog should be enabled.
+Set to `true` to rollback the last migration
+
+## ID6\_DATA\_DIR
+
+**Default**: /Users/geoffroy/dev/git/id6/id6/data
+
+**Required**: no
+
+**Type**: string
+
+**Description**:
+
+Path of the directory where we store data.
