@@ -15,7 +15,6 @@ module.exports = {
       type: 'category',
       label: 'Configuration',
       items: [
-        'configuration/emails',
         'configuration/environment',
         'configuration/database',
       ],
