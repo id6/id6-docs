@@ -112,12 +112,22 @@ Use id6 in your backend to authorize requests and protect routes:
 ```ts
 const dotenv = require('dotenv/config'); // loads .env into process.env
 const express = require('express');
+const docs = require('docs');
 const { authenticate, isAuthenticated } = require('id6-express');
 
 const app = express();
 
+app.use(cors({
+  // 1. allow browsers to send the auth cookie
+  credentials: true,
+}));
+// 2. make sure express parses cookies
 app.use(cookieParser());
-app.use(authenticate);
+// 3. add the auth middleware
+app.use(authenticate({
+  url: 'https://authorize.company.com',
+  secret: 'changeMe',
+}));
 
 app.get('/hello', (req, res) => {
   const user = req.user; // set by id6
