@@ -4,7 +4,13 @@ title: 'Quick start'
 
 ## Start id6
 
-Run `docker-compose up -d` with the following `docker-compose.yml`:
+:::tip
+
+A working example with React, Node and Docker Compose is available [here](https://github.com/id6/id6-express-react-example).
+
+:::
+
+Create the folloing `docker-compose.yml` then run `docker-compose up -d`:
 
 ```yml
 version: "3"
@@ -13,21 +19,22 @@ services:
     image: id6io/id6
     ports:
       # authentication (login page + user api)
-      - 3000:3000
+      - 8000:3000
       # authorization (verify tokens from your backends)
-      - 3030:3030 
+      - 3030:3030
     environment:
-      ID6_URL: http://localhost:3000
+      # where id6 authentication endpoint is served
+      ID6_URL: http://localhost:8000
       # where your users should be redirected after login
       ID6_REDIRECT_URL: http://localhost:4000
       # secret used to sign/verify jwt tokens
       ID6_JWT_SECRET: changeMe
       # secret used to access the authorization API
       ID6_AUTHORIZATION_SECRET: changeMe
-      # email config for local auth
+      # email config for local auth (see 
       ID6_MAIL_FROM: noreply@app.com
-      ID6_MAIL_USERNAME: user
-      ID6_MAIL_PASSWORD: password
+      ID6_MAIL_HOST: mailhog
+      ID6_MAIL_PORT: 1025
 
   mailhog:
     image: mailhog/mailhog
@@ -53,7 +60,7 @@ import { AuthProvider } from '@id6/react'
 
 function App() {
   return (
-    <AuthProvider url="http://localhost:3000">
+    <AuthProvider url="http://localhost:8000">
       <Home/>
     </AuthProvider>
   );
@@ -85,7 +92,7 @@ function Home() {
           <button type="button" onClick={logout}>Sign out</button>
         </p>
       ) : (
-        <a href="http://localhost:3000">Sign in</a>
+        <a href="http://localhost:8000">Sign in</a>
       )}
     </div>
   );
@@ -97,23 +104,16 @@ function Home() {
 Install id6 express integration and dependencies:
 
 ```bash
-npm i @id6/express cookie-parser dotenv
-```
-
-Create a `.env` file:
-
-```dotenv
-ID6_AUTHORIZATION_URL=http://localhost:3030
-ID6_AUTHORIZATION_SECRET=changeMe
+npm i @id6/express cookie-parser
 ```
 
 Use id6 in your backend to authorize requests and protect routes:
 
 ```ts
-const dotenv = require('dotenv/config'); // loads .env into process.env
 const express = require('express');
-const docs = require('docs');
-const { authenticate, isAuthenticated } = require('id6-express');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
+const { authenticate, isAuthenticated } = require('@id6/express');
 
 const app = express();
 
@@ -134,8 +134,7 @@ app.get('/hello', (req, res) => {
   res.json(user ? 'Authenticated' : 'Anonymous');
 });
 app.get('/private', isAuthenticated, (req, res) => {
-  const user = req.user; // set by id6
-  res.json(user ? 'Authenticated' : 'Anonymous');
+  res.json('This is top secret !');
 });
 
 app.listen(8000, () => console.log(`Listening on port 8000`));
