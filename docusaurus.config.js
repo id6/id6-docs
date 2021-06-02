@@ -85,4 +85,13 @@ module.exports = {
       hashed: true,
     }],
   ],
+  scripts: [
+    {
+      src: 'https://ackee.id6.io/ackee.js',
+      async: true,
+      defer: false,
+      'data-ackee-server': 'https://ackee.id6.io',
+      'data-ackee-domain-id': 'bbda296d-76ff-429a-a6ad-fb20766ee297',
+    },
+  ],
 };
