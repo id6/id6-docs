@@ -31,7 +31,7 @@ services:
       ID6_JWT_SECRET: changeMe
       # secret used to access the authorization API
       ID6_AUTHORIZATION_SECRET: changeMe
-      # email config for local auth (see 
+      # email config for local auth (see https://docs.id6.io/authentication/local)
       ID6_MAIL_FROM: noreply@app.com
       ID6_MAIL_HOST: mailhog
       ID6_MAIL_PORT: 1025
