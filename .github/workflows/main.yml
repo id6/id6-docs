@@ -1,5 +1,5 @@
 name: main
-on: [ push ]
+on: [ push, pull_request ]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -12,12 +12,3 @@ jobs:
         run: npm ci
       - name: "build"
         run: npm run build
-      - name: "publish"
-        run: |
-          npx -p "@getmeli/cli" meli upload ./build \
-            --url "https://meli.gempain.com" \
-            --site "0022a95b-c3d3-4ef6-91bb-fd58738b7a9f" \
-            --token "$MELI_TOKEN" \
-            --release "$GITHUB_SHA"
-        env:
-          MELI_TOKEN: ${{ secrets.MELI_TOKEN }}
